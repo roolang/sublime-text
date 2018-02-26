@@ -1,0 +1,9 @@
+{
+	"extensions":
+	[
+		"roo"
+	],
+	"use_tab_stops": true,
+	"tab_size": 4,
+	"detect_indentation": true
+}
