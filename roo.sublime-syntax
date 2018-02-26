@@ -1,0 +1,294 @@
+%YAML 1.2
+---
+name: Roo
+file_extensions:
+  - roo
+scope: source.roo
+
+# Regex variables
+variables:
+  identifier: '[A-Za-z_][A-Za-z_0-9]*[!?]?'
+  float: '(-)?[0-9]+[.][0-9]+'
+  integer: '(-)?[0-9]+'
+  path_lookahead: '(\.)?({{identifier}}(\.))*{{identifier}}'
+
+contexts:
+  main:
+    - include: expressions
+
+  expressions:
+    - include: operators    
+    - include: literals
+    - include: class
+    - include: module
+    - include: keywords 
+    - include: global-methods
+    - include: special-methods
+    - include: method
+    - include: fields
+    - include: identifiers    
+
+  fields:
+    - match: (?<=\.){{identifier}}(?=\()
+      scope: variable.function
+    - match: (?<=\.){{identifier}}
+      scope: variable.other.member
+
+  method:
+    - match: \b(function)\b
+      scope: meta.function.roo keyword.control.function.roo
+      push:
+        - meta_content_scope: meta.function.roo
+        - match: '({{identifier}})'
+          captures:
+            1: entity.name.function.roo
+          set: method-parameters-start
+        - match: '$'
+          pop: true
+        - match: '(?=\S)'
+          pop: true
+
+  method-parameters-start:
+    - meta_content_scope: meta.function.roo
+    - match: '(?=\()'
+      set:
+        - meta_content_scope: meta.function.parameters.roo
+        - match: '\('
+          scope: punctuation.definition.group.begin.roo
+          set: method-parameters
+    # No parameters
+    - match: '(?=$|#)'
+      pop: true
+
+  method-parameters:
+    - meta_content_scope: meta.function.parameters.roo
+    - match: '\)'
+      scope: meta.function.parameters.roo punctuation.definition.group.end.roo
+      pop: true
+    - match: '{{identifier}}'
+      scope: variable.parameter.roo
+    - include: comments
+    - match: ','
+      scope: punctuation.separator.roo
+    # De-structuring
+    - match: \(
+      scope: punctuation.definition.group.begin.roo
+      push:
+        - match: \)
+          scope: punctuation.definition.group.end.roo
+          pop: true
+        - match: '{{identifier}}'
+          scope: variable.parameter.roo
+        - match: ','
+          scope: punctuation.separator.roo
+
+  identifiers:
+    - match: '{{identifier}}'
+      scope: entity.name.roo
+
+  global-methods:
+    # Constructor methods for native data types.
+    - match: |-
+        (?x:
+          \b(
+            Array|
+            Hash|
+            File|
+            Regex
+          )\b
+          (?![!?])
+        )
+      scope: support.class.roo
+    # Global native functions.
+    - match: |-
+        (?x:
+          \b(
+            clock|
+            input|
+            print|
+            quit|
+            randomInt
+          )\b
+          (?![!?])
+        )
+      scope: support.function.global.native.roo
+
+  special-methods:
+    - match: '\b(require)\b'
+      scope: keyword.other.special-method.roo           
+
+  keywords:
+    - match: '\b(and|or|not)\b'
+      scope: keyword.operator.logical.roo
+    - match: '\b(break|next|return|super)\b'
+      scope: keyword.control.pseudo-method.roo
+    - match: '\b(class|module)\b'
+      scope: keyword.control.roo
+    - match: '\b(do|elif|else|if|let|next|then|until|var|while)\b'
+      scope: keyword.control.roo
+
+  module:
+    - match: '\b(module)\b'
+      scope: meta.module.roo keyword.control.module.roo
+      push: module-declaration
+
+  module-declaration:
+    - meta_content_scope: meta.module.roo
+    - match: '(?=(\.)?({{identifier}}\.)*{{identifier}})'
+      set:
+        - meta_content_scope: meta.module.roo entity.name.module.roo
+        - include: name-parts
+        - match: ''
+          pop: true
+    # Escape if no valid match
+    - match: (?=\S)
+      pop: true    
+
+  class:
+    # Defining a class method
+    - match: '\b(class)\b'
+      scope: keyword.control.class.roo
+      set: class-declaration
+
+  class-declaration:
+    - match: '{{identifier}}'
+      scope: meta.class.roo entity.name.class.roo
+      set: class-inheritance
+
+  class-inheritance:
+    - meta_content_scope: meta.class.roo
+    - match: '<'
+      scope: punctuation.separator.inheritance.roo
+      set:
+        - meta_content_scope: meta.class.roo
+        - match: '(?={{path_lookahead}})'
+          set:
+          - meta_content_scope: meta.class.roo entity.other.inherited-class.roo
+          - include: name-parts
+          - match: ''
+            pop: true
+    # Escape if no valid match
+    - match: '(?=\S)'
+      pop: true          
+
+  name-parts:
+    - match: '\.'
+      scope: punctuation.accessor.roo
+    - match: '({{identifier}})(\.)'
+      captures:
+        1: support.other.namespace.roo
+        2: punctuation.accessor.roo
+    - match: '{{identifier}}'
+
+  literals:
+    - include: strings    
+    - include: regex
+    - include: comments
+    - include: numbers
+    - include: booleans
+    - include: nothing
+
+  operators:
+    - match: '=>'
+      scope: punctuation.separator.key-value.roo      
+    - match: '==|<>|>=|<=|>|<'
+      scope: keyword.operator.comparison.roo    
+    - match: '%=|\*=|\+=|\-=|\\=|='
+      scope: keyword.operator.assignment.augmented.roo
+    - match: '(\^|%|\*|\+|\-|/)'
+      scope: keyword.operator.arithmetic.roo
+    - match: '\[|\]'
+      scope: punctuation.section.array.roo
+    - match: '\{|\}'
+      scope: punctuation.section.hash.roo      
+    - match: ','
+      scope: punctuation.separator.roo
+    - match: '\s+\?|\:'
+      scope: keyword.operator.conditional.roo
+
+  regex:
+    - match: '/=' # Needs higher precedence than regular expressions.
+      scope: keyword.operator.assignment.augmented.roo
+    - match: '\s*(/)(?=[^/]*$)'
+      captures:
+        1: keyword.operator.arithmetic.roo
+      pop: true    
+    - match: '\s*(/)'
+      captures:
+        1: punctuation.definition.generic.begin.roo string.regexp.classic.roo
+      push:
+        - meta_content_scope: string.regexp.classic.roo
+        - include: escaped-char
+        - match: "(\/)([eimnosux]*)"
+          scope: string.regexp.classic.roo
+          captures:
+            1: punctuation.definition.generic.end.roo
+            2: keyword.other.roo
+          pop: true  
+        - match: '$'
+          pop: true
+
+  escaped-char:
+    - match: '\\(?:[0-7]{1,3}|x[\da-fA-F]{1,2}|.)'
+      scope: constant.character.escape.roo
+
+  nothing:
+    - match: '\bNothing\b'
+      scope: constant.language.roo
+
+  booleans:
+    - match: '\b(True|False)\b'
+      scope: constant.language.roo
+
+  # Numbers
+  numbers:
+    - match: '(\b{{float}}\b|\b{{integer}})e{{integer}}\b'
+      scope: constant.numeric.roo
+    - match: '\b{{float}}\b'
+      scope: constant.numeric.float.roo
+    - match: '\b{{integer}}\b'
+      scope: constant.numeric.roo
+
+  # Comments
+  comments:
+    - include: multi_line_comment
+    - include: single_line_comment
+
+  multi_line_comment:
+    - match: '^##'
+      scope: punctuation.definition.comment.begin.roo
+      set:
+      - meta_scope: comment.block.roo
+      - match: '##'
+        scope: punctuation.definition.comment.end.roo
+        pop: true
+
+  single_line_comment:
+    - match: "#"
+      scope: punctuation.definition.comment.roo
+      push:
+      - meta_scope: comment.line.roo
+      - match: $
+        pop: true
+
+  # Strings
+  strings:
+    - include: double_quoted_string
+    - include: single_quoted_string 
+
+  double_quoted_string:
+    - match: '"'
+      scope: punctuation.definition.string.begin.roo
+      push:
+      - meta_scope: string.quoted.double.roo
+      - match: '"'
+        scope: punctuation.definition.string.end.roo
+        pop: true
+  single_quoted_string:
+    - match: "'"
+      scope: punctuation.definition.string.begin.roo
+      push:
+      - meta_scope: string.quoted.single.roo
+      - match: "'"
+        scope: punctuation.definition.string.end.roo
+        pop: true 
