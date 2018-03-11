@@ -114,7 +114,7 @@ contexts:
       scope: support.function.global.native.roo
 
   special-methods:
-    - match: '\b(require)\b'
+    - match: '\b(require|require_relative)\b'
       scope: keyword.other.special-method.roo           
 
   keywords:

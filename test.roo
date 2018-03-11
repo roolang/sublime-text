@@ -1,0 +1,1007 @@
+# This is a comment
+
+## This is a multiline comment
+That obviously spreads over multiple lines.
+It runs from the first double hash to the next double hash
+and includes newlines
+##
+
+# Variables
+var t1 # empty variable
+var t2 = "This is some text"
+var x = 100 # Double precision 64-bit floating point format
+var obj1 = Test() # initialises `obj` as a new instance of class Test
+
+# Mathematical operators.
++  # Binary addition (1 + 2) AND string concatenator.
+-  # Binary subtraction (1 - 2) / unary negate
+*  # Binary multiplication (1 * 2).
+/  # Binary division (1 / 2).
+%  # Modulo (1 % 2).
+^  # Power (8^2, i.e. 16).
+++ # Increment (both prefix: ++a and postfix: b++)
+-- # Decrement (both prefix: -a and postfix: b-)
+a = 1 / 2 
+# Comparison operators
+== # Equal to (a == b).
+<> # Not equal to (a <> b).
+>= # Greater than or equal to (a >= b).
+<= # Less than or equal to (a <= b).
+>  # Greater than (a > b).
+<  # Less than (a < b).
+
+# Misc operators
+=  # Assignment (a = 10).
++= # Addition assignment (a += 1  same as  a = a + 1)
+-= # Subtraction assignment (a -= 1  same as  a = a - 1)
+/= # Division assignment (a /= 1  same as  a = a / 1)
+*= # Multiplication assignment (a *= 1  same as  a = a * 1)
+%= # Remainder assignment (a %= 1  same as  a = a % 1)
+
+# Built-in data types
+print("Hello".reverse()) # prints "olleH"
+print(9.sqrt()) # prints "3"
+
+# Of course you can chain method calls together on literals just like with class instances:
+print("Hello".reverse().uppercase()) # prints "OLLEH"
+
+# Numbers
+125 # Integer literal
+42.51 # Decimal literal
+3.5e2 # Exponent notation
+
+# Text
+t = "This is a text literal with double quotes"
+t = 'So is this with single quotes'
+t = 'Single with "double quotes" inside'
+t = "Double with 'single quotes' inside"
+t = "Hello" + "World!" # Text concatenation with the `+` operator.
+
+# Booleans.
+var ok = True # Note: case-sensitive so True <> true
+var nope = False
+
+# Nothing
+Nothing # A special object in Roo that represents, well, nothing. It is equivalent to `nil` or `null` in other languages.
+
+# Arrays
+var a = Array(0) # Empty array.
+var b = [1, 2, 3] # Creation of an array and assignment on same line.
+b[1] = "Hello!" # Set element 1 of array `b` to the Text "Hello"
+b[0] # Get the value of element 0 in array `b`
+var c = ["Female", 36, True] # Arrays of mixed types.
+var arr2 = [1, 2, ["a", "b"]] # Arrays can contain other arrays.
+
+# Hashes
+var scores = {"Tony Stark" => 99, "Joey Tribbiani" => 55}
+var people = {} # Empty Hash.
+
+var scores = Hash()
+grades{"Tony Stark"} # 99
+
+var h = {"a" => 10, "b" => 20}
+h{"c"} = 100 # {"a" => 10, "b" => 20, "c" => 100}
+h{"c"} += 50 # {"a" => 10, "b" => 20, "c" => 150}
+
+# Regular expressions
+var r = /hello/
+var r = /#?([a-f0-9]{6}|[a-f0-9]{3})/i # Matches a hex number (case-insensitive option passed)
+var r = Regex("/#?([a-f0-9]{6}|[a-f0-9]{3})/i")
+
+# Single line if statement.
+if a > b then print("Yep. That's true")
+
+# if-else block.
+if a == b
+	print("true")
+else # Optional.
+	print("false")
+
+# if...elif...else block
+if dinner == "steak"
+	print("Yummy!")
+elif dinner == "pizza"
+	print("OK")
+else # Optional.
+	print("oh bother")
+
+# Ternary operator
+var guilty = True
+var verdict = guilty ? "He did it" : "He was innocent" # verdict now equals "He did it"
+
+# let...do...until loops.
+# This example prints out the even numbers between 0 and 10 inclusive.
+# Note that we've declared a variable (`n`) in the construct so it will be scoped to the loop only.
+let var n = 0 do n += 1 until n > 10
+	if n % 2 == 0 then print(n)
+
+# The example below omits the `do` clause and utilises a global scope variable as the counter.
+var j
+let j = 0 until j > 10
+	print(j)
+
+# You can also omit the initialiser (`let`).
+# Obviously this will result in an infinite loop unless we add a `break` statement...
+do j +=1
+	print(j)
+
+# while loops
+while a > b
+	print("Condition is true!")
+
+# break and next statements.
+var i = 0
+while True
+	i += 1
+	if i == 10 then break
+
+# Functions.
+# Declaring a function is easy:
+function sayBoo
+	print("Boo!")
+
+# Call it like so:
+sayBoo()
+
+# Functions can take parameters too:
+function sayHi(name)
+	print("Hi " + name + "!")
+
+sayHi("Garry") # prints "Hi Garry!"
+
+# Functions can be assigned to variables too:
+function test()
+	print("A test")
+
+var t = test
+t() # prints "A test"
+
+# Recursion works too since closures are implemented:
+function fibonacci(n)
+	if n <=1 then return n
+	return fibonacci(n - 2) + fibonacci(n - 1)
+
+# Print the first 20 fibonacci numbers
+let var i = 0 do i += 1 until i >= 20
+	print(fibonacci(i))
+
+# Classes.
+# Creating a new class is pretty easy:
+class Person
+
+# Classes can contain any number of instance methods:
+class Person
+	greet(who)
+		print("Hello " + who + "!")
+
+	sayBye(who)
+		print("Goodbye " + who)
+
+# Classes need to be instantiated before use:
+var garry = Person()
+
+# Classes can have an optional initialiser that is called whenever a new instance is created.
+# A class can also reference it's own methods and properties with the `self` keyword.
+class Person
+	init(name)
+		self.name = name
+
+	greet(who)
+		print("Hello " + who + "I'm " + self.name + ".")
+
+var garry = Person("Garry")
+garry.greet("Tony") # prints "Hello Tony I'm Garry."
+
+# Single inheritance is supported (with the `<` operator):
+class Person
+	init(name)
+		self.name = name
+
+	greet(who)
+		print("Hello " + who + ", my name is " + self.name)
+
+class Doctor < Person
+	diagnose()
+		print("I don't know what's wrong with you.")
+
+var tony = Doctor()
+tony.diagnose() # prints "I don't know what's wrong with you."
+
+# Subclasses can access their parent with the `super` keyword:
+class Person
+	init(name)
+		self.name = name
+
+	greet(who)
+		print("Hello " + who + ", my name is " + self.name)
+
+class Doctor < Person
+	init(name)
+		super.init(name)
+
+	diagnose()
+		print("I don't know what's wrong with you.")
+
+var geller = Doctor("Ross")
+geller.greet("Rachel") # prints "Hello Rachel"
+geller.diagnose() # prints "I don't know what's wrong with you."
+
+# Properties can be set on class instances dynamically:
+class Person
+	greet(who)
+		print("Hello " + who)
+
+var p = Person()
+p.age = 10
+print(p.age) # prints "10"
+
+# You can call a method on a class without instantiating it with the `static` keyword:
+class Biscuit
+	static bake()
+		print("I will bake for you")
+
+	eat()
+		print("I'm yummy!")
+
+var cookie = Biscuit()
+cookie.eat() # prints "I'm yummy!"
+Biscuit.bake() # prints "I will bake for you"
+
+# But calling `Biscuit.eat()` would raise a runtime error (since it's an instance method, not a static method).
+
+# Modules.
+# Modules are great. They allow you to encapsulate code within it's own namespace. Modules can
+# contain other modules, classes and static methods:
+module Sonos
+	discover()
+		print("I'm looking for Sonos speakers...")
+
+	class Player
+		init(ip)
+			self.ip = ip
+			print("New player created")
+
+		play(song)
+			print("Playing the song: " + song)
+
+Sonos.discover() # prints "I'm looking for Sonos speakers..."
+var p = Sonos.Player("111.222.333.444") # Creates a new instance and prints "New player created"
+p.play("Thriller") # prints "Playing the song: Thriller"
+
+# Regular Expressions.
+# Roo uses the [PCRE regular expression library][pcre] under the hood. 
+
+# Here is a (simple) regex pattern to find an email address: `/\w+\.\w+@\w+\.com/` 
+# It will only match emails in the format `<first>.<last>@<domain>.com`. To use a regex pattern in our code, 
+# we first need to instantiate a `Regex` object:
+var regex = /\w+\.\w+@\w+\.com/
+
+# To see if some text matches this pattern we can use either the `match()` method on a `Text` object 
+# (by passing in our `Regex` object) or by using the `match()` method on a `Regex` object (by passing in the text to search). 
+# Both approaches will return either a `RegexResult` object if at least one match is found or `Nothing` if no match is found:
+var regex = /\w+\.\w+@\w+\.com/
+"pepper.potts@stark.com".match(regex) # Returns a RegexResult object
+regex.match("pepper.potts@stark.com") # Also returns a RegexResult object
+"hello there".match(/\w+\.\w+@\w+\.com/) # Nothing as doesn't match the regex pattern
+
+# If you just want to see if a pattern and text match you can use the `matches?()` method on either a `Text` 
+# or `Regex` object:
+"hello".matches?(/.lo/) # True
+/.lo/,matches?("boo") # False
+
+# RegexResult
+# A `RegexResult` object is returned when the query text matches the regex pattern. This object contains 
+# information about the search result. Since it is possible for there to be multiple matches to a pattern within a 
+# single piece of text, this result contains one or more `RegexMatch` objects. Each `RegexMatch` object represents 
+# a single match to the pattern. There are a number of way to get these matches:
+var r = /love|hate/ # Matches either `love` or `hate`
+var result = "Sally loves Harry. Batman hates the Joker".match(r)
+result.length # 2 (as there are two matches, love and hate).
+var match1 = result.first_match # Could use result.match(0)
+var match2 = result.match(1) # Second match has a value of `1` because `match()` is zero-based
+
+# RegexMatch
+# Following on from above, a `RegexMatch` object contains everything you need to know about an individual match. 
+# The `RegexMatch` contains the start and finish position (zero-based) of the match within the initial query text, 
+# the actual text value of the match and information about any capture groups. We'll get to capture groups shortly.
+# Following on from the love/hate matches above...
+match1.value # "love"
+match1.start # 6
+match1.finish # 10
+
+match2.value # "hate"
+match2.start # 26
+match2.finish # 30
+
+# Capture groups
+# One of the great strengths of regular expressions is the ability to capture portions of matched text. 
+# This is done with _capture groups_. Any regex contained within parentheses is a capture group. An easy way to 
+# get all captures of a match as an array is with `RegexMatch.captures`:
+var r = /(\w+)\.(\w+)@(\w+\.com)/
+"pepper.potts@stark.com".match(r).first_match.captures # ["pepper", "potts", "stark.com"```
+
+# You can get the contents of a particular capture group using it's group number. The first group is numbered `1`:
+var one_group = /(\w+) \w+/
+var two_groups = /(\w+) (\w+)/
+"Mr Spock".match(one_group) # First group of the match will contain "Mr"
+"Dr McCoy".match(two_groups) # First group is "Dr", second group is "McCoy"
+
+# If a regex pattern contains capture groups then you can get information about the text captured in that 
+# group with the `RegexMatch.group()` method:
+var result = "Dr McCoy".match(/(\w+) (\w+)/)
+var group1 = result.first_match.group(1)
+group1.value # "Dr"
+group1.start # 0
+group1.finish # 2
+
+var group2 = result.first_match.group(2)
+group2.value # "McCoy"
+group2.start # 3
+group2.finish # 8
+
+# A pattern can also contain _named capture groups_. These function just like regular capture groups (and 
+# indeed are included in the numbered groups) but they are assigned a name to make it easier to retrieve 
+# them. Named capture groups are created with the syntax `(?<name>REGEX)`:
+var r = /(?<forename>\w+)\.(?<surname>\w+)@(?<domain>\w+\.com)/
+var t = "pepper.potts@stark.com"
+var match = t.match(r).first_match # Just get the first match (we know there's only one)
+var d = match.name("domain") # The `domain` group
+print(d.value + " [" + d.start + ", " + d.finish + "]") # stark.com [13, 22]
+
+# Using Multiple Files
+# For simple applications, a single file for your source code is all you need. As your application becomes 
+# more complicated however, you'll find that it's easier to break up your code into logical groupings and place 
+# each group into its own file or file(s). Roo makes this easy with its `require` statement. The syntax is 
+# straightforwards, taking a single Text argument representing the name of the file to require:
+require "myfile" # Note: just the file name, NOT `myfile.roo`.
+
+# When `myfile` is "required" the interpreter first needs to find the file in question. It does this by 
+# searching the **require path** for it. Currently, the only location in the require path is the `roo Packages` 
+# folder that should be in the same directory as the `roo` executable. So, let's say you installed Roo's folder 
+# in `/usr/local/bin/roo` then the require path will be `/usr/local/bin/roo/roo Packages`. If the interpreter 
+# finds `/usr/local/bin/roo/roo Packages/myfile.roo` it will then lex it, parse it and **inject** the resulting 
+# abstract syntax tree into the interpreter's existing tree and continue execution. The result will be the same 
+# as if you had replaced the `require` statement with the code of the file required.
+# Additionally, the interpreter is smart enough to require a file only once. If a subsequent call is made 
+# to require the same file later on, the interpreter will ignore it.
+
+# Standard Library
+# Like any good programming language, Roo has a standard library of functions you can use. Some of these act on 
+# the built-in data types, some are global functions and some are native modules.
+
+# IO Module.
+# The `IO` modules contains classes related to file input and output.
+
+# IO.File
+var f = IO.File("/Users/bob/Desktop/test.txt")
+
+# File.directory?
+var f1 = IO.File("/Users/bob/Desktop/test.txt")
+f1.directory? # False
+var f2 = IO.File("/Users/bob/Desktop/")
+f2.directory? # True
+
+# File.exists?
+var f = IO.File("/Users/bob/Desktop/test.txt")
+f.exists? # True
+
+# Maths Module
+# Maths.PI
+Maths.PI # 3.141593
+
+# Roo Module
+# Roo.version()
+Roo.version() # e.g: "1.2.1"
+
+# Generic object methods
+# The following methods are available on all objects.
+
+# responds_to?(name as Text) as Boolean
+"Hello".responds_to?("uppercase") # True
+
+# Global Functions
+# clock() as Number
+var time = clock() # e.g: 467467376
+
+# input(prompt as Text) as Text
+var name = input("Enter your name: ") # name will be set to the entered value
+
+# print(value)
+print("Hello")
+
+# randomInt(min as Integer , max as Integer) as Integer
+var n = randomInt(1, 10) # e.g: 4
+
+# Boolean methods
+# Boolean.to_text() as Text
+var result = True
+print(result.reverse()) # eurT
+b.to_text()
+
+# Nothing methods
+# Nothing.to_text() as Text
+var x
+print(x) # Nothing
+print(x.to_text().uppercase()) # "NOTHING"
+
+# Number methods
+#Number.abs as Number
+var i = -20
+i.abs # 20
+
+# Number.acos as Number
+0.5.acos # 1.047198
+
+# Number.asin as Number
+0.5.asin # 0.523599
+
+# Number.atan as Number
+0.5.atan # 0.463648
+
+# Number.ceil as Integer
+10.7.ceil # 11
+
+# Number.cos as Number
+50.cos # 0.964966
+
+# Number.even? as Boolean
+2.even? # True
+3.even? # False
+
+# Number.floor as Number
+1.4.floor # 1
+
+# Number.integer? as Boolean
+5.integer? # True
+45.78.integer? # False
+
+# Number.odd? as Boolean
+2.odd? # False
+3.odd? # True
+
+# Number.round as Number
+1.4.round # 1
+4.9.round # 5
+
+# Number.sign as Integer
+-10.sign # -1
+0.sign # 0
+42.34.sign # 1
+
+# Number.sin as Number
+50.sin # -0.262375
+
+# Number.sqrt as Number
+9.sqrt # 3
+
+# Number.tan as Number
+50.tan # -0.271901
+
+# Number.to_degrees() as Number
+2.to_degrees # 114.591559
+
+# Number.to_radians() as Number
+2.to_radians # 0.034907
+
+# Number.to_text() as Text
+var i = 100 # 100.00
+var t = i.to_text() # "100"
+
+# Text methods
+# Text.capitalise() as Text** and **Text.capitalise!() as Text
+var a = "garry pettet"
+var b = a.capitalise() # b = "Garry Pettet", a is unchanged
+a.capitalise!() # a is now "Garry Pettet"
+
+# Text.chars as Text
+"Die Hard".chars # c = ["D", "i", "e", " ", "H", "a", "r", "d"]
+
+# Text.empty? as Boolean
+var t = "Hi"
+t.empty? # False
+
+# Text.ends_with?(query as Text) as Boolean
+"Hello World".ends_with?("He") # False
+"Hello World".ends_with?("lo") # True
+
+# Text.include?(query as Text) as Boolean
+"Tony Stark".include?("Tony") # True
+
+# Text.index(query as Text) as Integer
+var name = "Tony Stark"
+var i = name.index("T") # returns 0
+i = name.index("S") # returns 5
+
+# Text.length as Integer
+var t = "Hello"
+t.length # 5
+
+# Text.lowercase() as Text** and **Text.lowercase!() as Text
+var a = "LOUD"
+var b = a.lowercase() # b = "loud", a is unchanged
+a.lowercase!() # a is now "loud"
+
+# Text.lstrip() as Text** and **Text.lstrip!() as Text
+var a = "  Hello"
+a.strip() # "Hello"
+
+# Text.match(r as Regex) as RegexResult or Nothing** and **Text.match(r as Regex, start as Integer) as RegexResult or Nothing
+"pepper.potts@stark.com".match(/\w+\.\w+@\w+\.com/)
+
+# Text.matches?(r as Regex) as Boolean
+"pepper.potts@stark.com".matches?(/\w+\.\w+@\w+\.com/) # True
+"hello".matches?(/\w+\.\w+@\w+\.com/) # False
+
+# Text.replace_all(find as Text, replacement as Text) as Text
+# Text.replace_all!(find as Text, replacement as Text) as Text
+"yummy yummy cake".replace_all("yummy", "scrummy") # "scrummy scrummy cake"
+
+# Text.replace_first(find as Text, replacement as Text) as Text
+# Text.replace_first!(find as Text, replacement as Text) as Text
+"yummy yummy cake".replace_first("yummy", "scrummy") # "scrummy yummy cake"
+
+# Text.reverse() as Text** and **Text.reverse!() as Text
+"Hello World!".reverse() # "!dlroW olleH"
+
+# Text.rstrip() as Text** and **Text.rstrip!() as Text
+var a = "Hello  "
+a.strip() # "Hello"
+
+# Text.slice(pos as Integer) as Text** and **Text.slice!(pos as Integer) as Text
+var t = "Hello World"
+t.slice(0) # returns "H"
+t.slice(1) # returns "e"
+t.slice(-3) # returns "r"
+t.slice!(-3) # t is now "r"
+
+# Text.slice(start as Integer, length as Integer) as Text** and **Text.slice!(start as Integer, length as Integer) as Text
+var t = "Hello World"
+t.slice(0, 1) # returns "H"
+t.slice(0, 3) # returns "Hel"
+t.slice(2, 6) # returns "llo Wo"
+t.slice(-3, 2) # returns "rl"
+t.slice(2, -5) # returns Nothing (can't have a negative length)
+
+# Text.starts_with?(query as Text) as Boolean
+"Hello World".starts_with?("He") # True
+
+# Text.strip() as Text** and **Text.strip!() as Text
+var a = "  Dr Garry Pettet  "
+a.strip() # "Dr Garry Pettet"
+
+# Text.swapcase() as Text** and **Text.swapcase!() as Text
+var a = "Dr Garry Pettet"
+var b = a.swapcase() # b = "dR gARRY pETTET", a is unchanged
+a.swapcase!() # a is now "dR gARRY pETTET"
+
+# Text.uppercase() as Text** and **Text.uppercase!() as Text
+var a = "quiet"
+var b = a.uppercase() # b = "QUIET", a is unchanged
+a.uppercase!() # a is now "QUIET"
+
+# Array methods
+# Array.contains(query)? as Boolean
+var a = ["a", 10, True]
+a.contains?("a") # True
+a.contains?("A") # False
+
+# Array.delete_at(index as Integer) as Object** and **Array.delete_at!(index as Integer) as Object
+var x = ["a", "b", "c", "d"]
+var y = a.delete_at(1) # y = "b", x = ["a", "b", "c", "d"]
+x.delete_at!(1) # x = ["a", c", "d"]
+x.delete_at(10) # Nothing
+
+# Array.each(func as Function, optional args as Array) as Array
+function stars(e)
+  print("*" + e + "*")
+
+function prefix(e, what)
+  print(what + e)
+
+var a = ["a", "b", "c"]
+a.each(stars)
+# Prints:
+# *a*
+# *b*
+# *c*
+
+a.each(prefix, ["->"])
+# Prints:
+# ->a
+# ->b
+# ->c
+
+# You can also pass standard library functions to each:
+a.each(print)
+# Prints:
+# a
+# b
+# c
+
+# Array.each_index(func as Function, optional args as Array) as Array
+function stars(e)
+	print("*" + e + "*")
+
+function prefix(e, what)
+	print(what + e)
+
+var a = ["a", "b", "c"]
+a.each_index(stars)
+# Prints:
+# *1*
+# *2*
+# *3*
+
+a.each_index(prefix, ["->"])
+# Prints:
+# ->1
+# ->2
+# ->3
+
+# You can also pass standard library functions to each_index:
+a.each_index(print)
+# Prints:
+# 1
+# 2
+# 3
+
+# Array.empty? as Boolean
+var a = Array(0)
+a.empty? # True
+var b = []
+b.empty? # True
+b.push("a")
+b.empty? # False
+
+# Array.fetch(index as Integer, default as Object) as Object
+var a = ["cat", "dog", "cow"]
+a.fetch("cat", "nope") # "cat"
+a.fetch("pig", "nope") # "nope"
+
+# Array.find(obj as Object) as Integer
+var a = ["a", "b", "c", "d"]
+a.find("b") # 1
+a.find("e") # Nothing
+
+# Array.first() as Object** and **Array.first(n as Integer) as RooArray
+var x = ["a", "b", "c", "d"]
+x.first() # "a"
+x.first(1) # ["a"]
+x.first(2) # ["a", "b"]
+x.first(3) # ["a", "b", "c"]
+x.first(4) # ["a", "b", "c", "d"]
+x.first(5) # ["a", "b", "c", "d"]
+var y = []
+y.first() # Nothing
+y.first(1) # []
+
+# Array.insert!(index as Integer, obj as Object) as RooArray
+[1, 2, 3].insert!(0, "a") # ["a", 1, 2, 3]
+[1, 2, 3].insert!(3, "a") # [1, 2, 3, "a"]
+[1, 2, 3].insert!(-1, "a") # [1, 2, 3, "a"]
+[1, 2, 3].insert!(-2, "a") # [1, 2, "a", 3]
+[1, 2, 3].insert!(-4, "a") # ["a", 1, 2, 3]
+[1, 2, 3].insert!(5, "a") # [1, 2, 3, Nothing, Nothing, "a"]
+
+# Array.join() as Text** and **Array.join(separator as Text) as Text
+var a = [1, 2, 3, ["x", "y"]]
+a.join() # "123xy"
+a.join("-"), # "1-2-3-x-y"
+
+# Array.keep(func as Function, optional arguments as Array) as Array
+# Array.keep!(func as Function, optional arguments as Array) as Array
+function ok?(i)
+	return i <= 5 ? True : False
+
+var a = [2, 4, 6, 8, 10]
+a.keep!(ok?) # a is now [2, 4]
+
+# Array.last() as Object
+# Array.last(n as Integer) as Array
+var x = ["a", "b", "c", "d"]
+x.last() # "d"
+x.last(1) # ["d"]
+x.last(2) # ["c", "d"]
+x.last(3) # ["b", "c", "d"]
+x.last(4) # ["a", "b", "c", "d"]
+x.last(5) # ["a", "b", "c", "d"]
+var y = []
+y.last() # Nothing
+y.last(1) # []
+
+# Array.length as Integer
+var a = ["a", "b", "c"]
+a.length # 3
+
+# Array.map(func as Function, optional arguments as Array) as Array
+# Array.map!(func as Function, optional arguments as Array) as Array
+function exclaim(e)
+	return e.uppercase() + "!"
+
+function prefix(e, what)
+	return what + e
+
+var a = ["a", "b", "c", "d"]
+a.map(exclaim) # ["A!", "B!", "C!", "D!"]
+a.map(prefix, ["*"]) # ["*a", "*b", "*c", "*d"]
+
+# Array.pop() as Object
+var a = ["a", "b", "c"]
+a.pop() # "c"
+print(a) # ["a", "b"]
+
+# Array.push(obj as Object) as Array
+var a = ["a", "b", "c"]
+a.push("d") # ["a", "b", "c", "d"]
+
+# Array.reject(func as Function, optional arguments as Array) as Array
+# Array.reject!(func as Function, optional arguments as Array) as Array
+function too_big?(i)
+	return i > 5 ? True : False
+
+var a = [2, 4, 6, 8, 10]
+var b = a.reject(too_big?)
+print(a) # [2, 4, 6, 8, 10]
+print(b) # [2, 4]
+
+# Array.reverse() as Array
+# Array.reverse!() as Array
+var a = ["a", "b", "c"]
+var b = a.reverse()
+print(a) # ["a", "b", "c"]
+print(b) # ["c", "b", "a"]
+
+# Array.shift!() as Object
+# Array.shift!(n as Integer) as Array
+var args = ["-m", "-q", "filename"]
+args.shift!() # returns "-m"
+print(args) # ["-q", "filename"]
+
+args = ["-m", "-q", "filename"]
+args.shift!(2) # returns ["-m", "-q"]
+print(args) # ["filename"]
+
+# Array.shuffle() as Array
+var a = [1, 2, 3, 4, 5]
+a.shuffle() # [1, 4, 5, 2, 3] (or something similar - it's random)
+
+# Array.slice(index as Integer) as Object
+# Array.slice!(index as Integer) as Object
+var a = ["a", "b", "c"]
+a.slice(0) # "a"
+a.slice(3) # Nothing
+a.slice(-1) # "c"
+
+a = ["a", "b", "c"]
+a.slice!(0) # Returns "a", a = ["b", "c"]
+
+a = ["a", "b", "c"]
+a.slice!(4) # Returns Nothing, a = ["a", "b", "c"]
+
+a = ["a", "b", "c"]
+a.slice!(-1) # Returns "c", a = ["a", "b"]
+
+# Array.slice(start as Integer, length as Integer) as Array or Nothing
+# Array.slice!(start as Integer, length as Integer) as Array or Nothing
+var a = ["a", "b", "c"]
+a.slice(0, 0) # Returns []
+a.slice(0, 1) # Returns ["a"]
+a.slice(0, 5) # Returns ["a", "b", "c"]
+a.slice(-1, 1) # Returns ["c"]
+a.slice(-1, -1) # Returns Nothing
+
+# Array.take(n as Number) as Array
+# Array.take!(n as Number) as Array
+var a = [1, 2, 3, 4, 5] # a is [1, 2, 3, 4, 5]
+var b = a.take(0) # b is []
+var c = a.take(3) # b is [1, 2, 3]
+var d = a.take(100) # returns all elements (i.e: [1, 2, 3, 4 ,5])
+a.take!(2) # a is altered and is now [1, 2]
+
+# Array.unique()
+# Array.unique()
+var a = ["a", "a", "b", "b", "c"]
+a.unique() # ["a", "b", "c"]
+
+# Hash methods.
+# Hash.clear!  
+var h = {"a" => 1, "b" => 2}
+h.clear! # {}
+
+# Hash.delete!(key as Object) as Object
+var h = {"a" => 1, "b" => 2}
+h.delete!("a") # Returns 1, `h` is now {"b" => 2}
+h.delete!("oops") # Returns Nothing, `h` is untouched.
+
+# Hash.each(func as Function, optional args as Array) as Hash
+function put(key, value)
+	print(key + " is " + value)
+	
+function putPrefix(key, value, prefix)
+	print(prefix + key + " is " + value)
+	
+var h = {"a" => 100, "b" => 200}
+h.each(put)
+# Prints:
+# a is 100
+# b is 200
+
+h.each(putPrefix, ["* "])
+# Prints:
+# * a is 100
+# * b is 200
+
+# Hash.each_key(func as Function, optional args as Array) as Hash
+function put(key)
+	print("The key is: " + key)
+	
+function putSuffix(key, suffix)
+	print("The key is: " + key + suffix)
+
+var h = {"a" => 100, "b" => 200}
+h.each_key(put)
+# Prints:
+# The key is a
+# The key is b
+
+h.each_key(putSuffix, [" silly!"])
+# Prints:
+# The key is a silly!
+# The key is b silly!
+
+# Hash.each_value(func as Function, optional args as Array) as Hash
+function put(v)
+	print("The value is: " + v)
+	
+function putSuffix(v, suffix)\
+	print("The value is: " + v + suffix)
+
+var h = {"a" => 100, "b" => 200}
+h.each_value(put)
+# Prints:
+# The value is 100
+# The value is 200
+
+h.each_value(putSuffix, [" silly!"])
+# Prints:
+# The value is 100 silly!
+# The value is 200 silly!
+
+# Hash.fetch(key as Object, default as Object) as Object
+var grades = {"Ross" => "A", "Joey" => "D", "Chandler" => "B+"}
+grades.fetch("Ross", "Not marked") # "A"
+grades.fetch("Monica", "Not marked") # "Not marked"
+
+# Hash.fetch_values(keys as Array) as Array
+var grades = {"Ross" => "A", "Joey" => "D", "Chandler" => "B+"}
+grades.fetch_values(["Ross", "Chandler"]) # ["A", "B+"]
+var people = ["Monica", "Joey"]
+grades.fetch_values(people) # [Nothing, "D"]
+
+# Hash.has_key?(key as Object) as Boolean
+var ages = {"Bob" => 30, "Liz" => 10}
+ages.has_key?("Bob") # True.
+ages.has_key?("bob") # False (case-sensitive!)
+
+# Hash.has_value?(value as Object) as Boolean
+var h = {"a" => 10, "b" => 20, "c" => r}
+var r = /hello/i
+h.has_value?(20) # True
+h.has_value?(r) # True
+
+# Hash.invert() as Hash
+var h = {"a" => 10, "b" => 20, "c" => 30}
+var i = h.invert() # {10 => "a", 20 => "b", 30 => "c"}
+
+# Hash.keep(func as Function, optional arguments as Array) as Hash
+# Hash.keep!(func as Function, optional arguments as Array) as Hash
+function even_key?(key, value)
+	return key % 2 == 0 ? True : False
+
+var h = {1 => "first", 2 => "second", 3 => "third"}
+var result = h.keep(even_key?)
+print(h) # {1 => "first", 2 => "second", 3 => "third"}
+print(result) # {2 => "second"} <-- kept key-value pairs.
+
+# Hash.keys as Array
+var h = {"a" => 100, "b" => 200}
+h.keys # [a, b]
+
+# Hash.length
+var h = {"a" => 100, "b" => 200}
+h.length # 2
+
+# Hash.merge(other as Hash) as Hash
+# Hash.merge!(other as Hash) as Hash
+var h1 = {"a" => 100, "b" => 200}
+var h2 = {"b" => 254, "c" => 300}
+h1.merge(h2) # {"a"=>100, "b"=>254, "c"=>300```
+
+# Hash.merge(other as Hash, func as Function) as Hash
+# Hash.merge!(other as Hash, func as Function) as Hash
+function custom_merge(key, oldVal, newVal)
+	return newVal - oldVal
+
+var h1 = { "a" => 100, "b" => 200 }
+var h2 = { "b" => 254, "c" => 300 }
+h1.merge(h2, custom_merge) # {"a"=>100, "b"=>54,  "c"=>300}
+
+# Hash.reject(func as Function, optional arguments as Array) as Hash
+# Hash.reject!(func as Function, optional arguments as Array) as Hash
+function even_key?(key, value)
+	return key % 2 == 0 ? True : False
+
+var h = {1 => "first", 2 => "second", 3 => "third"}
+var result = h.reject(even_key?)
+print(h) # {1 => "first", 2 => "second", 3 => "third"}
+print(result) # {1 => "first", 3 => "third"} <-- rejected key-value pairs.
+
+# Hash.values as Array
+var h = {"a" => 100, "b" => 200}
+h.values # [100, 200]
+
+# Regular expression object methods.
+# Working with regular expressions in Roo involves using the `Regex`, `RegexResult`, `RegexMatch` and `RegexMatchInfo` classes. Their properties and methods are discussed below.
+
+# Regex object
+# Regex.match(t as Text) as RegexResult or Nothing
+# Regex.match(t as Text, start as Integer) as RegexResult or Nothing
+var r = /hello/i
+r.match("Hello world!") # Returns a RegexResult
+r.match("Hiya") # Returns Nothing
+
+# Regex.matches?(t as Text) as Boolean
+var r = /hello/i
+r.matches?("Hello world!") # True
+r.matches?("Hiya") # False
+
+# RegexResult object.
+# RegexResult.first_match as RegexMatch
+var r = /hello/i
+var result = r.match("Hello world!")
+result.first_match # Returns a RegexMatch object
+
+# RegexResult.length as Integer
+var r = /hello/i
+r.matches?("Hello world!").length # 1
+r.matches?("Hiya!").length # 0
+
+# RegexResult.match(index as Integer) as RegexMatch
+var t = "I love coffee. I hate melon."
+var result = t.match(/love (\w+)|hate (\w+)/) # 2 matches ("coffee" and "melon")
+print(result.match(0).value) # "love coffee"
+print(result.match(1).value) # "hate melon"
+
+# RegexResult.matches as RegexMatch array
+
+# RegexMatch object
+# RegexMatch.captures as Array
+var r = /(\w+)\.(\w+)@(\w+\.com)/
+"pepper.potts@stark.com".match(r).first_match.captures # ["pepper", "potts", "stark.com"]
+
+# RegexMatch.finish as Integer
+var r = /love|hate/
+var match = "Sally loves Harry. Batman hates the Joker".match(r).first_match
+match.finish # 10
+
+# RegexMatch.group(number as Integer) as RegexMatchInfo or Nothing
+var r = /(\w+)\.(\w+)@(\w+\.com)/
+var t = "pepper.potts@stark.com"
+var match = t.match(r).first_match
+var grp1 = match.group(1) # The first group (captures "pepper")
+
+# RegexMatch.name(name as Text) as RegexMatchInfo or Nothing
+var r = /(?<forename>\w+)\.(?<surname>\w+)@(?<domain>\w+\.com)/
+var t = "pepper.potts@stark.com"
+var match = t.match(r).first_match
+var domain = match.group("domain") # The domain group (captures "stark.com")
+
+# RegexMatch.start as Integer
+var r = /love|hate/
+var match = "Sally loves Harry. Batman hates the Joker".match(r).first_match
+match.start # 6
+
+# RegexMatch.value as Text
+var r = /love|hate/
+var match = "Sally loves Harry. Batman hates the Joker".match(r).first_match
+match.value # "love"
