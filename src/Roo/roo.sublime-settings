@@ -5,5 +5,7 @@
 	],
 	"use_tab_stops": true,
 	"tab_size": 4,
-	"detect_indentation": true
+	"detect_indentation": true,
+	"trim_trailing_white_space_on_save": false,
+	"trim_automatic_white_space": false
 }
